@@ -1,10 +1,13 @@
+import MultiSelect from "./components/multi-select/MultiSelect.tsx";
+
 function App() {
   return (
-    <div
-      className={`font-onest p-3 pb-0 md:p-6 md:pb-0 h-dvh flex flex-col gap-16 main-background`}
-    >
-      <h1 className={"font-onest text-3xl"}>HI</h1>
-    </div>
+      <main className="font-onest min-h-screen p-4 md:p-8 lg:p-24 max-w-4xl mx-auto">
+        <h1 className="text-3xl font-bold mb-8">Multi-Select Filter Demo</h1>
+        <div className="bg-white rounded-lg shadow-lg p-6">
+          <MultiSelect/>
+        </div>
+      </main>
   );
 }
 
