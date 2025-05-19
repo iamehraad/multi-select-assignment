@@ -1,11 +1,11 @@
-import type { SearchItemType } from "../../domain/types/SearchItemType";
+import type { ProductType } from "../../domain/types/ProductType";
 
 interface Props {
-  item: SearchItemType;
-  toggleItem: (item: SearchItemType) => void;
+  item: ProductType;
+  toggleItem: (item: ProductType) => void;
 }
 
-const SelectedItem = ({ item, toggleItem }: Props) => {
+const SelectedProduct = ({ item, toggleItem }: Props) => {
   return (
     <div
       key={item.id}
@@ -26,4 +26,4 @@ const SelectedItem = ({ item, toggleItem }: Props) => {
   );
 };
 
-export default SelectedItem;
+export default SelectedProduct;
