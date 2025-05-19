@@ -1,28 +1,11 @@
-import React from "react";
 import type { SearchItemType } from "../../domain/types/SearchItemType";
-import { SelectedItemComponentStyleEnum } from "../../domain/types/commonTypes";
 
 interface Props {
   item: SearchItemType;
   toggleItem: (item: SearchItemType) => void;
-  type: SelectedItemComponentStyleEnum;
 }
 
-const SelectedItem = ({ item, toggleItem, type }: Props) => {
-  if (type === SelectedItemComponentStyleEnum.CHIP) {
-    return (
-      <div
-        key={item.id}
-        className="px-3 py-2 hover:bg-gray-100 cursor-pointer flex justify-between items-center"
-        onClick={() => toggleItem(item)}
-      >
-        <span>{item.name}</span>
-        {/*TODO: Add proper icon*/}
-        <span className="text-green-500">✓</span>
-      </div>
-    );
-  }
-
+const SelectedItem = ({ item, toggleItem }: Props) => {
   return (
     <div
       key={item.id}
