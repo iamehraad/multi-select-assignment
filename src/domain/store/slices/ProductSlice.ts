@@ -1,9 +1,8 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../store";
-import type { ProductType } from "../../types/ProductType";
 
 interface State {
-  selectedProducts: ProductType[];
+  selectedProducts: string[];
 }
 
 const initialState: State = {
@@ -14,13 +13,13 @@ export const productSlice = createSlice({
   name: "product",
   initialState,
   reducers: {
-    toggleItemFromSelectedList: (state, action: PayloadAction<ProductType>) => {
+    toggleItemFromSelectedList: (state, action: PayloadAction<string>) => {
       const existingSelectedProduct = state.selectedProducts.find(
-        (item) => item.id === action.payload.id,
+        (productId) => productId === action.payload,
       );
       if (existingSelectedProduct) {
         state.selectedProducts = state.selectedProducts.filter(
-          (item) => item.id !== action.payload.id,
+          (productId) => productId !== action.payload,
         );
       } else {
         state.selectedProducts.push(action.payload);
