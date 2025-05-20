@@ -16,6 +16,16 @@ export const productSlice = createSlice({
     setSelectedProducts: (state, action: PayloadAction<string[]>) => {
       state.selectedProducts = action.payload;
     },
+    setSelectedProductsFromSessionStorage: (state) => {
+      const savedItems = sessionStorage.getItem("selectedItems");
+      if (savedItems) {
+        try {
+          state.selectedProducts = JSON.parse(savedItems);
+        } catch (err) {
+          console.error("Error parsing saved items:", err);
+        }
+      }
+    },
     toggleItemFromSelectedList: (state, action: PayloadAction<string>) => {
       let productListToBeSaved = state.selectedProducts;
       const existingSelectedProduct = state.selectedProducts.find(
@@ -47,5 +57,6 @@ export const {
   toggleItemFromSelectedList,
   clearSelectedProductList,
   setSelectedProducts,
+  setSelectedProductsFromSessionStorage,
 } = productSlice.actions;
 export default productSlice.reducer;
