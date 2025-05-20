@@ -4,18 +4,14 @@ import { useAppDispatch } from "../../domain/utils/dispatch";
 
 interface Props {
   product: ProductType;
-  selectedProducts: string[];
+  isProductSelected: boolean;
 }
 
-const ProductListItem = ({ product, selectedProducts }: Props) => {
+const ProductListItem = ({ product, isProductSelected }: Props) => {
   const dispatch = useAppDispatch();
 
-  const isSelected = !!selectedProducts.find(
-    (productId) => productId === product.id,
-  );
-
-  const toggleItem = (id: string) => {
-    dispatch(toggleItemFromSelectedList(id));
+  const toggleItem = () => {
+    dispatch(toggleItemFromSelectedList(product.id));
   };
 
   return (
@@ -24,25 +20,25 @@ const ProductListItem = ({ product, selectedProducts }: Props) => {
         <div className="w-6 h-6 mr-2 relative flex items-center justify-center">
           <input
             type="checkbox"
-            checked={isSelected}
-            onChange={() => toggleItem(product.id)}
+            checked={isProductSelected}
+            onChange={toggleItem}
             className="opacity-0 absolute h-6 w-6 cursor-pointer"
           />
           <div
-            className={'border bg-white border-gray-300 w-6 h-6 rounded p-0.5'}
+            className={"border bg-white border-gray-300 w-6 h-6 rounded p-0.5"}
           >
-            {isSelected && (
+            {isProductSelected && (
               <div
-                className={'bg-blue-600 border-blue-600 rounded w-full h-full'}
+                className={"bg-blue-600 border-blue-600 rounded w-full h-full"}
               />
             )}
           </div>
         </div>
-        <span
-          className={`font-medium ${isSelected ? "text-blue-600" : "text-gray-800"}`}
+        <p
+          className={`font-medium ${isProductSelected ? "text-blue-600" : "text-gray-800"}`}
         >
           {product.name}
-        </span>
+        </p>
       </label>
     </div>
   );

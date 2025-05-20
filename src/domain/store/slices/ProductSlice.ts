@@ -13,21 +13,39 @@ export const productSlice = createSlice({
   name: "product",
   initialState,
   reducers: {
+    setSelectedProducts: (state, action: PayloadAction<string[]>) => {
+      state.selectedProducts = action.payload;
+    },
     toggleItemFromSelectedList: (state, action: PayloadAction<string>) => {
+      let productListToBeSaved = state.selectedProducts;
       const existingSelectedProduct = state.selectedProducts.find(
         (productId) => productId === action.payload,
       );
       if (existingSelectedProduct) {
-        state.selectedProducts = state.selectedProducts.filter(
+        productListToBeSaved = productListToBeSaved.filter(
           (productId) => productId !== action.payload,
         );
       } else {
-        state.selectedProducts.push(action.payload);
+        productListToBeSaved.push(action.payload);
       }
+      state.selectedProducts = productListToBeSaved;
+      sessionStorage.setItem(
+        "selectedItems",
+        JSON.stringify(productListToBeSaved),
+      );
+    },
+    clearSelectedProductList: (state) => {
+      console.log("clear called");
+      state.selectedProducts = [];
+      sessionStorage.removeItem("selectedItems");
     },
   },
 });
 
 export const selectProduct = (state: RootState) => state.product;
-export const { toggleItemFromSelectedList } = productSlice.actions;
+export const {
+  toggleItemFromSelectedList,
+  clearSelectedProductList,
+  setSelectedProducts,
+} = productSlice.actions;
 export default productSlice.reducer;
