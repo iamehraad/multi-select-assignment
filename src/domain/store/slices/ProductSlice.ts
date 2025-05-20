@@ -1,5 +1,6 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../store";
+import { sessionStorageKeys } from "../../statics/browserStorageKeys";
 
 interface State {
   selectedProducts: string[];
@@ -17,7 +18,9 @@ export const productSlice = createSlice({
       state.selectedProducts = action.payload;
     },
     setSelectedProductsFromSessionStorage: (state) => {
-      const savedItems = sessionStorage.getItem("selectedItems");
+      const savedItems = sessionStorage.getItem(
+        sessionStorageKeys.selectedProductsList,
+      );
       if (savedItems) {
         try {
           state.selectedProducts = JSON.parse(savedItems);
@@ -40,14 +43,13 @@ export const productSlice = createSlice({
       }
       state.selectedProducts = productListToBeSaved;
       sessionStorage.setItem(
-        "selectedItems",
+        sessionStorageKeys.selectedProductsList,
         JSON.stringify(productListToBeSaved),
       );
     },
     clearSelectedProductList: (state) => {
-      console.log("clear called");
       state.selectedProducts = [];
-      sessionStorage.removeItem("selectedItems");
+      sessionStorage.removeItem(sessionStorageKeys.selectedProductsList);
     },
   },
 });
