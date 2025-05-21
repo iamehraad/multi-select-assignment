@@ -3,13 +3,17 @@ import type { RootState } from "../../store";
 import { sessionStorageKeys } from "../../../statics/browserStorageKeys";
 import { fetchProductsAsync } from "./productThunk";
 import { LoadingEnum } from "../../../types/commonTypes";
+import { convertProductsListResponse } from "../../../convertToDomain/ convertProductsListResponse";
+import { ProductType } from "../../../types/productType";
 
 interface State {
+  productsList: ProductType[];
   selectedProducts: string[];
   status: LoadingEnum;
 }
 
 const initialState: State = {
+  productsList: [],
   selectedProducts: [],
   status: LoadingEnum.IDLE,
 };
@@ -63,6 +67,7 @@ export const productSlice = createSlice({
       })
       .addCase(fetchProductsAsync.fulfilled, (state, action) => {
         state.status = LoadingEnum.IDLE;
+        state.productsList = convertProductsListResponse(action.payload);
       })
       .addCase(fetchProductsAsync.rejected, (state) => {
         state.status = LoadingEnum.IDLE;

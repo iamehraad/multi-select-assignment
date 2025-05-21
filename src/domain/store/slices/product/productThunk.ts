@@ -6,5 +6,5 @@ export const fetchProductsAsync = createAsyncThunk(
   async () => {
     const response = await fetchProductsList();
     return response;
-  },
+  }
 );
