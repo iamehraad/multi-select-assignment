@@ -1,13 +1,15 @@
 import type { ProductType } from "../../../domain/types/productType";
 import { toggleItemFromSelectedList } from "../../../domain/store/slices/product/productSlice";
 import { useAppDispatch } from "../../../domain/utils/dispatch";
+import {CSSProperties} from "react";
 
 interface Props {
   product: ProductType;
   isProductSelected: boolean;
+  listComponentStyle: CSSProperties
 }
 
-const ProductListItem = ({ product, isProductSelected }: Props) => {
+const ProductListItem = ({ product, isProductSelected, listComponentStyle }: Props) => {
   const dispatch = useAppDispatch();
 
   const toggleItem = () => {
@@ -15,7 +17,7 @@ const ProductListItem = ({ product, isProductSelected }: Props) => {
   };
 
   return (
-      <div className="flex items-center py-2">
+      <div style={listComponentStyle} className="flex items-center py-2">
         <label className="flex items-center cursor-pointer w-full focus-within:outline-none focus-within:ring-2  focus-within:ring-blue-500 rounded px-1 py-1 ml-1 gap-2">
           <input
             type="checkbox"

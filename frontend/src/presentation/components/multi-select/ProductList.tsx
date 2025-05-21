@@ -1,5 +1,7 @@
 import { ProductType } from "../../../domain/types/productType";
 import ProductListItem from "./ProductListItem";
+import { FixedSizeList as List } from "react-window";
+import { CSSProperties } from "react";
 
 interface Props {
   listOfProducts: ProductType[];
@@ -14,18 +16,36 @@ export const ProductList = ({ listOfProducts, selectedProducts }: Props) => {
       </div>
     );
   }
+
+  const renderRow = ({
+    index,
+    style,
+  }: {
+    index: number;
+    style: CSSProperties;
+  }) => {
+    const product = listOfProducts[index];
+    const isSelected = !!selectedProducts.find(
+      (productId) => productId === product.id,
+    );
+
+    return (
+      <ProductListItem
+        isProductSelected={isSelected}
+        product={product}
+        listComponentStyle={style}
+      />
+    );
+  };
+
   return (
-    <ul className="mb-4 overflow-auto max-h-96 pr-4">
-      {listOfProducts.map((item) => (
-        <li key={item.id}>
-          <ProductListItem
-            isProductSelected={
-              !!selectedProducts.find((productId) => productId === item.id)
-            }
-            product={item}
-          />
-        </li>
-      ))}
-    </ul>
+    <List
+      height={300}
+      itemCount={listOfProducts.length}
+      itemSize={40}
+      width="100%"
+    >
+      {renderRow}
+    </List>
   );
 };
