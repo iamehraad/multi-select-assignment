@@ -1,13 +1,12 @@
-import type { ProductType } from "../types/productType";
+import type {ProductType} from "../types/productType";
 
 export const convertProductsListResponse = (
   productsList: string[]
 ): ProductType[] => {
-  const domainProducts = productsList.map((product) => {
-    return {
-      id: product.replaceAll(" ", ""),
-      name: product,
-    };
+    return productsList.map((product, index) => {
+      return {
+          id: product.replaceAll(" ", "") + index,
+          name: product,
+      };
   });
-  return domainProducts;
 };
