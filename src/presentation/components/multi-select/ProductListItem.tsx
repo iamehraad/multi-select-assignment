@@ -32,7 +32,7 @@ const ProductListItem = ({ product, isProductSelected }: Props) => {
               />
             )}
           </div>
-          <span className={`${isProductSelected ? "text-blue-600 font-medium" : "text-gray-800"}`}>{product.name}</span>
+          <span className={`font-medium ${isProductSelected ? "text-blue-600" : "text-gray-800"}`}>{product.name}</span>
         </label>
       </div>
   );
