@@ -33,7 +33,7 @@ export const productSlice = createSlice({
         try {
           state.selectedProducts = JSON.parse(savedItems);
         } catch (err) {
-          console.error("Error parsing saved items:", err);
+          console.error("Error on setSelectedProductsFromSessionStorage:", err);
         }
       }
     },

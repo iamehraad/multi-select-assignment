@@ -7,16 +7,15 @@ interface Props {
 
 const SearchInput = ({ searchQuery, setSearchQuery }: Props) => {
   return (
-    <div className="flex items-center relative">
+    <div className="relative mb-4">
       <input
         type="text"
-        placeholder="Search items..."
-        className="w-full p-2 pl-2 border border-gray-300 rounded-md"
+        placeholder="Zoek op ..."
+        className="w-full p-3 border border-gray-300 rounded-md"
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
-        autoFocus
       />
-      <div className="absolute right-2">
+      <div className={"absolute inset-y-0 right-0 pr-3 flex items-center"}>
         <SearchIcon />
       </div>
     </div>
