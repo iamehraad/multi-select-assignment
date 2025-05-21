@@ -3,7 +3,7 @@ import {
   type ThunkAction,
   type Action,
 } from "@reduxjs/toolkit";
-import productSlice from "./slices/ProductSlice";
+import productSlice from "./slices/product/productSlice";
 
 export const store = configureStore({
   reducer: {

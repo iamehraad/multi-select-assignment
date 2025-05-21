@@ -1,13 +1,17 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
-import type { RootState } from "../store";
-import { sessionStorageKeys } from "../../statics/browserStorageKeys";
+import type { RootState } from "../../store";
+import { sessionStorageKeys } from "../../../statics/browserStorageKeys";
+import { fetchProductsAsync } from "./productThunk";
+import { LoadingEnum } from "../../../types/commonTypes";
 
 interface State {
   selectedProducts: string[];
+  status: LoadingEnum;
 }
 
 const initialState: State = {
   selectedProducts: [],
+  status: LoadingEnum.IDLE,
 };
 
 export const productSlice = createSlice({
@@ -51,6 +55,18 @@ export const productSlice = createSlice({
       state.selectedProducts = [];
       sessionStorage.removeItem(sessionStorageKeys.selectedProductsList);
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchProductsAsync.pending, (state) => {
+        state.status = LoadingEnum.LOADING;
+      })
+      .addCase(fetchProductsAsync.fulfilled, (state, action) => {
+        state.status = LoadingEnum.IDLE;
+      })
+      .addCase(fetchProductsAsync.rejected, (state) => {
+        state.status = LoadingEnum.IDLE;
+      });
   },
 });
 
