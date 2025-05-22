@@ -49,7 +49,7 @@ const MultiSelectProducts = () => {
   };
 
   return (
-    <div className="bg-gray-50 rounded-lg border border-gray-200 p-6 w-full max-w-md mx-auto">
+    <div className="bg-gray-50 rounded-lg border border-gray-200 p-6 w-full max-w-md mx-auto md:h-auto">
       <h2 className="text-xl font-medium text-gray-800 mb-4">Productgroep</h2>
 
       <div>
