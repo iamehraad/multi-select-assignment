@@ -1,21 +1,49 @@
 import { ProductType } from "../../../domain/types/productType";
 import ProductListItem from "./ProductListItem";
 import { FixedSizeList as List } from "react-window";
-import { CSSProperties } from "react";
+import { CSSProperties, useMemo } from "react";
+import { usePlatform } from "../../hooks/usePlatform";
 
 interface Props {
-  listOfProducts: ProductType[];
+  productsList: ProductType[];
   selectedProducts: string[];
+  searchQuery: string;
 }
 
-export const ProductList = ({ listOfProducts, selectedProducts }: Props) => {
-  if (!listOfProducts.length) {
-    return (
-      <div className="p-4 text-center text-red-500">
-        No Product matches your search criteria!
-      </div>
-    );
-  }
+export const ProductList = ({
+  productsList,
+  selectedProducts,
+  searchQuery,
+}: Props) => {
+  const { windowHeight, isMobile, isVerySmallDevice } = usePlatform();
+
+  const filteredItems = useMemo(() => {
+    const filteredSelectedItems: ProductType[] = [];
+    const filteredUnselectedItems: ProductType[] = [];
+
+    productsList.forEach((item) => {
+      if (selectedProducts.includes(item.id)) {
+        filteredSelectedItems.push(item);
+      } else if (item.name.toLowerCase().includes(searchQuery.toLowerCase())) {
+        filteredUnselectedItems.push(item);
+      }
+    });
+
+    return {
+      unselectedList: filteredUnselectedItems,
+      products: [...filteredSelectedItems, ...filteredUnselectedItems],
+    };
+  }, [productsList, selectedProducts, searchQuery]);
+
+  const getItemSize = () => {
+    if (isVerySmallDevice) {
+      return 90;
+    }
+    if (isMobile) {
+      return 60;
+    }
+    return 50;
+  };
 
   const renderRow = ({
     index,
@@ -24,7 +52,7 @@ export const ProductList = ({ listOfProducts, selectedProducts }: Props) => {
     index: number;
     style: CSSProperties;
   }) => {
-    const product = listOfProducts[index];
+    const product = products[index];
     const isSelected = !!selectedProducts.find(
       (productId) => productId === product.id,
     );
@@ -34,18 +62,28 @@ export const ProductList = ({ listOfProducts, selectedProducts }: Props) => {
         isProductSelected={isSelected}
         product={product}
         listComponentStyle={style}
+        isVerySmallDevice={isVerySmallDevice}
+        isMobile={isMobile}
       />
     );
   };
 
+  const { unselectedList, products } = filteredItems;
   return (
-    <List
-      height={300}
-      itemCount={listOfProducts.length}
-      itemSize={40}
-      width="100%"
-    >
-      {renderRow}
-    </List>
+    <div>
+      <List
+        height={windowHeight - 400}
+        itemCount={products.length}
+        itemSize={getItemSize()}
+        width="100%"
+        style={{ overflowX: "hidden" }}
+        children={renderRow}
+      />
+      {!unselectedList.length && (
+        <div className="p-4 text-center text-red-500 flex-grow">
+          No item matches your search criteria!
+        </div>
+      )}
+    </div>
   );
 };
