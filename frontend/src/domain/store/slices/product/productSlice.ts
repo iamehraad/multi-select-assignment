@@ -2,29 +2,35 @@ import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../../store";
 import { sessionStorageKeys } from "../../../statics/browserStorageKeys";
 import { fetchProductsAsync } from "./productThunk";
-import { LoadingEnum } from "../../../types/commonTypes";
+import { FetchApiError, LoadingEnum } from "../../../types/commonTypes";
 import { convertProductsListResponse } from "../../../convertToDomain/ convertProductsListResponse";
 import { ProductType } from "../../../types/productType";
 
 interface State {
   productsList: ProductType[];
   selectedProducts: string[];
-  status: LoadingEnum;
+  loadingStatus: LoadingEnum;
+  productsError: {
+    fetchingProductsList?: {
+      status: number;
+      message: string;
+    };
+  };
 }
 
 const initialState: State = {
   productsList: [],
   selectedProducts: [],
-  status: LoadingEnum.IDLE,
+  loadingStatus: LoadingEnum.LOADING,
+  productsError: {
+    fetchingProductsList: undefined,
+  },
 };
 
 export const productSlice = createSlice({
   name: "product",
   initialState,
   reducers: {
-    setSelectedProducts: (state, action: PayloadAction<string[]>) => {
-      state.selectedProducts = action.payload;
-    },
     setSelectedProductsFromSessionStorage: (state) => {
       const savedItems = sessionStorage.getItem(
         sessionStorageKeys.selectedProductsList,
@@ -63,14 +69,18 @@ export const productSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchProductsAsync.pending, (state) => {
-        state.status = LoadingEnum.LOADING;
+        state.productsError.fetchingProductsList = undefined;
+        state.loadingStatus = LoadingEnum.LOADING;
       })
       .addCase(fetchProductsAsync.fulfilled, (state, action) => {
-        state.status = LoadingEnum.IDLE;
+        state.productsError.fetchingProductsList = undefined;
+        state.loadingStatus = LoadingEnum.IDLE;
         state.productsList = convertProductsListResponse(action.payload);
       })
-      .addCase(fetchProductsAsync.rejected, (state) => {
-        state.status = LoadingEnum.IDLE;
+      .addCase(fetchProductsAsync.rejected, (state, action) => {
+        state.productsError.fetchingProductsList =
+          action.payload as FetchApiError;
+        state.loadingStatus = LoadingEnum.IDLE;
       });
   },
 });
@@ -79,7 +89,6 @@ export const selectProduct = (state: RootState) => state.product;
 export const {
   toggleItemFromSelectedList,
   clearSelectedProductList,
-  setSelectedProducts,
   setSelectedProductsFromSessionStorage,
 } = productSlice.actions;
 export default productSlice.reducer;

@@ -1,10 +1,13 @@
+import { apiUrls } from "../urls";
+
 export const fetchProductsList = async (): Promise<string[]> => {
-    try {
-        const response = await fetch("http://localhost:8080/api/products")
-        const json = await response.json()
-        return json.data
-    } catch (e) {
-        console.log(e)
-        return Promise.reject(e)
-    }
+  const response = await fetch(apiUrls.productsList);
+  if (!response.ok) {
+    const errorBody = await response.json();
+    throw {
+      message: errorBody?.message || "Something went wrong!",
+    };
+  }
+  const json = await response.json();
+  return json.data;
 };

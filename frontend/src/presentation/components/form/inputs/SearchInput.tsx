@@ -2,16 +2,18 @@ import SearchIcon from "../../icons/SearchIcon";
 
 interface Props {
   searchQuery: string;
+  isDisabled: boolean;
   setSearchQuery: (query: string) => void;
 }
 
-const SearchInput = ({ searchQuery, setSearchQuery }: Props) => {
+const SearchInput = ({ searchQuery, setSearchQuery, isDisabled }: Props) => {
   return (
     <div className="relative mb-4">
       <input
         type="text"
         placeholder="Zoek op ..."
-        className="w-full p-3 border border-gray-300 rounded-md"
+        disabled={isDisabled}
+        className="w-full p-3 border border-gray-300 rounded-md disabled:bg-gray-300"
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
       />

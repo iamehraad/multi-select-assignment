@@ -4,6 +4,11 @@ export interface IconProps {
     fill?: string;
 }
 
+export interface FetchApiError {
+    status: number;
+    message: string;
+}
+
 export const LoadingEnum = {
     LOADING: "loading",
     IDLE: "idle",
