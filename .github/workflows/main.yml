@@ -1,0 +1,22 @@
+name: Java CI with Maven
+
+on:
+  workflow_dispatch
+
+jobs:
+  test-backend-app:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21 (Temurin)
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Navigate to project and run tests
+        working-directory: backend/product
+        run: mvn clean test
