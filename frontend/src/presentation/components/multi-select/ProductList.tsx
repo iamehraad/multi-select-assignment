@@ -12,7 +12,8 @@ interface Props {
 
 const ProductList = memo(
   ({ productsList, selectedProducts, searchQuery }: Props) => {
-    const { windowHeight, isMobile, isVerySmallDevice } = usePlatform();
+    const { windowHeight, isMobile, isDesktop, isVerySmallDevice } = usePlatform();
+
     const filteredItems = useMemo(() => {
       const filteredSelectedItems: ProductType[] = [];
       const filteredUnselectedItems: ProductType[] = [];
@@ -48,7 +49,7 @@ const ProductList = memo(
       const itemCount = allProducts.length;
       const calculatedHeight = itemCount * itemSize;
       const minHeight = itemSize * 2;
-      const maxHeight = isMobile ? windowHeight - 400 : itemSize * 8;
+      const maxHeight = !isDesktop ? windowHeight - 400 : itemSize * 8;
 
       return Math.max(minHeight, Math.min(calculatedHeight, maxHeight));
     };
