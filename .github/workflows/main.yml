@@ -36,4 +36,10 @@ jobs:
 
       - name: Navigate to project and run tests
         working-directory: backend/product
-        run:  mvn clean install
+        run: mvn -B package --file pom.xml
+
+      - name: Upload JAR artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-jar
+          path: target/*.jar
