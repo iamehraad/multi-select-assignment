@@ -1,13 +1,21 @@
 import { apiUrls } from "../urls";
+import { axiosClient } from "../network";
+import { isAxiosError } from "axios";
 
 export const fetchProductsList = async (): Promise<string[]> => {
-  const response = await fetch(apiUrls.productsList);
-  if (!response.ok) {
-    const errorBody = await response.json();
-    throw {
-      message: errorBody?.message || "Something went wrong!",
-    };
+  try {
+    const response = await axiosClient.get(apiUrls.productsList);
+    return response.data.data;
+  } catch (error) {
+    if (isAxiosError(error)) {
+      throw {
+        message: error.response
+          ? error.message || "Something went wrong!"
+          : error.request
+            ? "Server is not reactive."
+            : "Something is really wrong!",
+      };
+    }
+    throw { message: "Something is really wrong!" };
   }
-  const json = await response.json();
-  return json.data;
 };
