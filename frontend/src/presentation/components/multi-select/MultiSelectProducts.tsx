@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../domain/utils/dispatch";
 import {
   clearSelectedProductList,
@@ -9,7 +9,8 @@ import { fetchProductsAsync } from "../../../domain/store/slices/product/product
 import { LoadingEnum } from "../../../domain/types/commonTypes";
 import SearchInput from "../form/inputs/SearchInput";
 import { useDebounce } from "../../hooks/useDebounce";
-import { ProductList } from "./ProductList";
+import ProductList from "./ProductList";
+import CommonButton from "../common/CommonButton";
 
 const MultiSelectProducts = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -22,15 +23,15 @@ const MultiSelectProducts = () => {
     fetchProductsList();
   }, []);
 
-  const fetchProductsList = () => {
+  const fetchProductsList = useCallback(() => {
     dispatch(fetchProductsAsync());
     dispatch(setSelectedProductsFromSessionStorage());
-  };
+  }, []);
 
-  const clearProductSelection = () => {
+  const clearProductSelection = useCallback(() => {
     dispatch(clearSelectedProductList());
     setSearchQuery("");
-  };
+  }, []);
 
   return (
     <div className="bg-gray-50 rounded-lg border border-gray-200 p-6 w-full max-w-md mx-auto md:h-auto">
@@ -61,21 +62,25 @@ const MultiSelectProducts = () => {
       </div>
 
       {productsError.fetchingProductsList ? (
-        <button
+        <CommonButton
           onClick={fetchProductsList}
-          className="w-full gap-2 mt-4 break-words bg-red-600 hover:bg-red-700 text-white font-medium py-3 px-4 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 cursor-pointer"
+          className={
+            "bg-red-600 hover:bg-red-700 text-white focus:ring-red-500"
+          }
         >
           <span className={"text-center"}>
             {productsError.fetchingProductsList.message}. Retry fetching data
           </span>
-        </button>
+        </CommonButton>
       ) : (
-        <button
+        <CommonButton
           onClick={clearProductSelection}
-          className="w-full mt-4 break-words bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 cursor-pointer"
+          className={
+            "bg-blue-600 hover:bg-blue-700 text-white focus:ring-blue-500"
+          }
         >
-          Toepassen
-        </button>
+          <span className={"text-center"}>Toepassen / Clear</span>
+        </CommonButton>
       )}
     </div>
   );
