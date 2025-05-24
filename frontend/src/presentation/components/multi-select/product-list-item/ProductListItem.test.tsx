@@ -5,11 +5,12 @@ import { renderWithProviders } from "../../../../domain/utils/redux-test-provide
 import { ProductSliceStatesType } from "../../../../domain/types/redux/ProductSliceTypes";
 import { LoadingEnum } from "../../../../domain/types/commonTypes";
 import userEvent from "@testing-library/user-event";
+import {mockData} from "../../../../domain/utils/mockTestData";
 
 describe("Product list item", () => {
-  const defaultProduct = { id: "1", name: "Jest sample product" };
   const defaultTestId = "product-list-item";
-
+  const defaultProduct = mockData.mockedProducts[0];
+  
   const setup = ({
     componentProps,
     productState,
@@ -56,7 +57,7 @@ describe("Product list item", () => {
     expect(checkbox).toBeInTheDocument();
     expect(selectedBox).toBeInTheDocument();
     expect(selectedBox.firstChild).not.toBeInTheDocument();
-    expect(nameSpan).toHaveTextContent("Jest sample product");
+    expect(nameSpan).toHaveTextContent("Mocked sample product");
     expect(store.getState().product.selectedProducts).toStrictEqual([]);
   });
 

@@ -4,18 +4,11 @@ import { ProductSliceStatesType } from "../../../../domain/types/redux/ProductSl
 import { LoadingEnum } from "../../../../domain/types/commonTypes";
 import ProductList from "./ProductList";
 import { ProductListProps } from "../../../../domain/types/components/ProductListTypes";
+import { mockData } from "../../../../domain/utils/mockTestData";
+
+const { mockedProducts } = mockData;
 
 describe("Product list", () => {
-  const defaultProducts = [
-    {
-      id: "1",
-      name: "Jest sample product",
-    },
-    {
-      id: "2",
-      name: "Search product",
-    },
-  ];
   const defaultTestId = "product-list";
 
   const setup = ({
@@ -52,7 +45,7 @@ describe("Product list", () => {
   test("renders correctly", () => {
     const { listItems, noItem } = setup({
       componentProps: {
-        productsList: defaultProducts,
+        productsList: mockedProducts,
         selectedProducts: [],
         searchQuery: "",
       },
@@ -80,8 +73,8 @@ describe("Product list", () => {
     const { listItems, noItem, noItemText, noItemDivider, selectedBoxes } =
       setup({
         componentProps: {
-          productsList: defaultProducts,
-          selectedProducts: defaultProducts.map(({ id }) => id),
+          productsList: mockedProducts,
+          selectedProducts: mockedProducts.map(({ id }) => id),
           searchQuery: "",
         },
       });
@@ -96,7 +89,7 @@ describe("Product list", () => {
   test("No item renders if nothing matches search query", () => {
     const { listItems, noItem, noItemText, noItemDivider } = setup({
       componentProps: {
-        productsList: defaultProducts,
+        productsList: mockedProducts,
         selectedProducts: [],
         searchQuery: "something that doesnt exist",
       },
@@ -111,7 +104,7 @@ describe("Product list", () => {
   test("correctly show searched item", () => {
     const { listItems, noItem } = setup({
       componentProps: {
-        productsList: defaultProducts,
+        productsList: mockedProducts,
         selectedProducts: [],
         searchQuery: "search",
       },
@@ -123,12 +116,24 @@ describe("Product list", () => {
   test("correctly show searched item with all uppercase search query", () => {
     const { listItems, noItem } = setup({
       componentProps: {
-        productsList: defaultProducts,
+        productsList: mockedProducts,
         selectedProducts: [],
         searchQuery: "SEARCH",
       },
     });
     expect(listItems).toHaveLength(1);
+    expect(noItem).not.toBeInTheDocument();
+  });
+
+  test("correctly show searched item while having shared characters", () => {
+    const { listItems, noItem } = setup({
+      componentProps: {
+        productsList: mockedProducts,
+        selectedProducts: [],
+        searchQuery: "product",
+      },
+    });
+    expect(listItems).toHaveLength(2);
     expect(noItem).not.toBeInTheDocument();
   });
 });

@@ -1,3 +1,3 @@
 export const envConfig = {
-    backendUrl: "mockbackendUrl",
+    backendUrl: "http://mockbackendUrl",
 }
