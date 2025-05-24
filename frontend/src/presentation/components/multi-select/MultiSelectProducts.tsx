@@ -76,6 +76,7 @@ const MultiSelectProducts = () => {
       {productsError.fetchingProductsList ? (
         <CommonButton
           onClick={fetchProductsList}
+          dataTestId={"retry"}
           className={
             "bg-red-600 hover:bg-red-700 text-white focus:ring-red-500"
           }
@@ -87,6 +88,7 @@ const MultiSelectProducts = () => {
       ) : (
         <CommonButton
           onClick={clearProductSelection}
+          dataTestId={"clear"}
           className={
             "bg-blue-600 hover:bg-blue-700 text-white focus:ring-blue-500"
           }

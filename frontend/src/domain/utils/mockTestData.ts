@@ -9,4 +9,5 @@ export const mockData = {
       name: "Search product",
     },
   ],
+  mockResponse: { data: ["Mocked sample product", "Search product"] },
 };

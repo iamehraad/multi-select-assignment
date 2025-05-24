@@ -3,12 +3,14 @@ import MultiSelectProducts from "./MultiSelectProducts";
 import { ProductSliceStatesType } from "../../../domain/types/redux/ProductSliceTypes";
 import { renderWithProviders } from "../../../domain/utils/redux-test-provider";
 import { LoadingEnum } from "../../../domain/types/commonTypes";
-import axios from "axios";
 import { mockData } from "../../../domain/utils/mockTestData";
+import AxiosMockAdapter from "axios-mock-adapter";
+import { axiosClient } from "../../../data/network";
+import { apiUrls } from "../../../data/urls";
 
-jest.mock("axios");
-const { mockedProducts } = mockData;
+const mockClient = new AxiosMockAdapter(axiosClient);
 
+const { mockedProducts, mockResponse } = mockData;
 
 describe("Multi select product", () => {
   const defaultDataTestId = "multi-select-products";
@@ -21,7 +23,7 @@ describe("Multi select product", () => {
     const { store } = renderWithProviders(<MultiSelectProducts />, {
       preloadedState: {
         product: productState ?? {
-          productsList: [],
+          productsList: mockedProducts,
           selectedProducts: [],
           loadingStatus: LoadingEnum.IDLE,
           productsError: {
@@ -35,43 +37,46 @@ describe("Multi select product", () => {
       inputWrapper: screen.queryByTestId(`${defaultDataTestId}-input-wrapper`),
       searchInput: screen.queryByTestId("search-input"),
       loading: screen.queryByTestId(`${defaultDataTestId}-loading`),
-      actionButton: screen.queryByTestId("common-button"),
+      clearButton: screen.queryByTestId("common-button-clear"),
+      retryButton: screen.queryByTestId("common-button-retry"),
       store,
     };
   };
 
   test("renders correctly", async () => {
-    (axios.get as jest.Mock).mockResolvedValue({
-      status: 200,
-      response: { data: mockedProducts },
-    });
-    const { wrapper, inputWrapper, loading, actionButton, searchInput } = setup(
-      {
-        productState: {
-          productsList: mockedProducts,
-          selectedProducts: [],
-          loadingStatus: LoadingEnum.IDLE,
-          productsError: {
-            fetchingProductsList: undefined,
-          },
+    mockClient.onGet(apiUrls.productsList).reply(200, mockResponse);
+    const {
+      wrapper,
+      inputWrapper,
+      loading,
+      clearButton,
+      retryButton,
+      searchInput,
+    } = setup({
+      productState: {
+        productsList: [],
+        selectedProducts: [],
+        loadingStatus: LoadingEnum.IDLE,
+        productsError: {
+          fetchingProductsList: undefined,
         },
       },
-    );
+    });
 
     await waitFor(() => expect(wrapper).toBeInTheDocument());
 
-    expect(actionButton).toBeInTheDocument();
+    expect(clearButton).toBeInTheDocument();
+    expect(clearButton).toHaveTextContent("Toepassen / Clear");
     expect(inputWrapper).toBeInTheDocument();
     expect(searchInput).toBeInTheDocument();
     expect(loading).not.toBeInTheDocument();
     expect(inputWrapper).not.toBeDisabled();
+    expect(retryButton).not.toBeInTheDocument();
   });
 
   test("renders error message when API fails", async () => {
-    (axios.get as jest.Mock).mockRejectedValue({
-      data: null,
-    });
-    const { wrapper, actionButton, searchInput } = setup({
+    mockClient.onGet(apiUrls.productsList).reply(500);
+    const { wrapper, clearButton, searchInput } = setup({
       productState: {
         productsList: [],
         selectedProducts: [],
@@ -84,12 +89,34 @@ describe("Multi select product", () => {
         },
       },
     });
+    await waitFor(() => {
+      const retryButton = screen.queryByTestId("common-button-retry");
+      expect(wrapper).toBeInTheDocument();
+      expect(searchInput).toBeDisabled();
+      expect(clearButton).not.toBeDisabled();
+      expect(retryButton).toBeInTheDocument();
+      expect(retryButton).toHaveTextContent(
+        "Request failed with status code 500. Retry fetching data",
+      );
+    });
+  });
 
-    await waitFor(() => expect(wrapper).toBeInTheDocument());
-    expect(searchInput).toBeDisabled();
-    expect(actionButton).toBeInTheDocument();
-    expect(actionButton).toHaveTextContent(
-      "Something is really wrong!. Retry fetching data",
-    );
+  test("show loading text", async () => {
+    mockClient.onGet(apiUrls.productsList).reply(200);
+    const { loading } = setup({
+      productState: {
+        productsList: [],
+        selectedProducts: [],
+        loadingStatus: LoadingEnum.LOADING,
+        productsError: {
+          fetchingProductsList: undefined,
+        },
+      },
+    });
+
+    await waitFor(() => {
+      expect(loading).toBeInTheDocument();
+      expect(loading).toHaveTextContent("Loading items...");
+    });
   });
 });
