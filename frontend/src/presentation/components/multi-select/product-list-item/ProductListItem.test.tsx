@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { screen } from "@testing-library/react";
 import ProductListItem from "./ProductListItem";
 import { ProductListItemTypes } from "../../../../domain/types/components/ProductListItemTypes";
 import { renderWithProviders } from "../../../../domain/utils/redux-test-provider";
