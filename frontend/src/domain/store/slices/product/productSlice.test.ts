@@ -118,7 +118,7 @@ describe("productSlice", () => {
       { id: "Jestsampleproduct0", name: "Jest sample product" },
     ];
 
-    jest.mock("../../../convertToDomain/convertProductsListResponse", () => ({
+    jest.mock("../../../convertToDomain/product-list-convertor/convertProductsListResponse", () => ({
       convertProductsListResponse: jest.fn(() => mockConverted),
     }));
 

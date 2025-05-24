@@ -1,11 +1,11 @@
 export const mockData = {
   mockedProducts: [
     {
-      id: "1",
+      id: "Mockedsampleproduct0",
       name: "Mocked sample product",
     },
     {
-      id: "2",
+      id: "Searchproduct1",
       name: "Search product",
     },
   ],
