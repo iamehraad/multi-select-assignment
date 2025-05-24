@@ -5,12 +5,12 @@ import { renderWithProviders } from "../../../../domain/utils/redux-test-provide
 import { ProductSliceStatesType } from "../../../../domain/types/redux/ProductSliceTypes";
 import { LoadingEnum } from "../../../../domain/types/commonTypes";
 import userEvent from "@testing-library/user-event";
-import {mockData} from "../../../../domain/utils/mockTestData";
+import { mockData } from "../../../../domain/utils/mockTestData";
 
 describe("Product list item", () => {
   const defaultTestId = "product-list-item";
   const defaultProduct = mockData.mockedProducts[0];
-  
+
   const setup = ({
     componentProps,
     productState,
@@ -81,7 +81,9 @@ describe("Product list item", () => {
     });
     expect(selectedBox.firstChild).toBeInTheDocument();
     expect(selectedBox.firstChild).toHaveClass("bg-blue-600");
-    expect(store.getState().product.selectedProducts).toStrictEqual(["1"]);
+    expect(store.getState().product.selectedProducts).toStrictEqual([
+      "Mockedsampleproduct0",
+    ]);
   });
 
   test("correctly triggers dispatch to select item and saves in redux", async () => {
@@ -103,6 +105,8 @@ describe("Product list item", () => {
       },
     });
     await userEvent.click(checkbox);
-    expect(store.getState().product.selectedProducts).toStrictEqual(["1"]);
+    expect(store.getState().product.selectedProducts).toStrictEqual([
+      "Mockedsampleproduct0",
+    ]);
   });
 });
