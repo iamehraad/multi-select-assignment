@@ -1,26 +1,35 @@
-import {fireEvent, render, screen} from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import CommonButton from "./CommonButton";
 
 describe("Common button", () => {
-  test("renders correctly", async () => {
+  const setup = ({ clickHandler }: { clickHandler?: () => void }) => {
     render(
-      <CommonButton onClick={() => {}} dataTestId={"jest"}>
+      <CommonButton
+        dataTestId="jest"
+        onClick={clickHandler ? clickHandler : () => {}}
+        className={"jest-class"}
+      >
         <span>Hi Bol</span>
       </CommonButton>,
     );
-    expect(screen.getByTestId("common-button-jest")).toBeInTheDocument();
-    expect(screen.getByTestId("common-button-jest").querySelector('span')).toHaveTextContent("Hi Bol");
+    return screen.getByTestId("common-button-jest");
+  };
+
+  test("renders correctly", async () => {
+    const button = setup({ clickHandler: undefined });
+    expect(button).toBeInTheDocument();
+    expect(button).toHaveTextContent("Hi Bol");
   });
 
   test("correctly triggers click handler", async () => {
     const clickHandler = jest.fn();
-    render(
-        <CommonButton onClick={clickHandler} dataTestId={"jest"}>
-          <span>Hi Bol</span>
-        </CommonButton>,
-    );
-    const button = screen.getByTestId("common-button-jest");
+    const button = setup({ clickHandler });
     fireEvent.click(button);
     expect(clickHandler).toHaveBeenCalled();
+  });
+
+  test("correctly attaches className", async () => {
+    const button = setup({ clickHandler: undefined });
+    expect(button).toHaveClass("jest-class");
   });
 });
