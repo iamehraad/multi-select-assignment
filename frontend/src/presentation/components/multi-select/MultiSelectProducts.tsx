@@ -9,10 +9,11 @@ import { fetchProductsAsync } from "../../../domain/store/slices/product/product
 import { LoadingEnum } from "../../../domain/types/commonTypes";
 import SearchInput from "../form/inputs/SearchInput";
 import { useDebounce } from "../../hooks/useDebounce";
-import ProductList from "./ProductList";
-import CommonButton from "../common/CommonButton";
+import ProductList from "./product-list/ProductList";
+import CommonButton from "../common/common-button/CommonButton";
 
 const MultiSelectProducts = () => {
+  const defaultDataTestId = "multi-select-products";
   const [searchQuery, setSearchQuery] = useState("");
   const debouncedValue = useDebounce(searchQuery, 500);
   const dispatch = useAppDispatch();
@@ -34,12 +35,18 @@ const MultiSelectProducts = () => {
   }, []);
 
   return (
-    <div className="bg-gray-50 rounded-lg border border-gray-200 p-6 w-full max-w-md mx-auto md:h-auto">
-      <h2 className="text-xl font-medium text-gray-800 mb-4 break-words">
+    <div
+      className="bg-gray-50 rounded-lg border border-gray-200 p-6 w-full max-w-md mx-auto md:h-auto"
+      data-testid={defaultDataTestId}
+    >
+      <h2
+        className="text-xl font-medium text-gray-800 mb-4 break-words"
+        data-testid={`${defaultDataTestId}-title`}
+      >
         Productgroep
       </h2>
 
-      <div>
+      <div data-testid={`${defaultDataTestId}-input-wrapper`}>
         <SearchInput
           isDisabled={!!productsError.fetchingProductsList}
           searchQuery={searchQuery}
@@ -49,7 +56,12 @@ const MultiSelectProducts = () => {
 
       <div className="min-h-40">
         {loadingStatus === LoadingEnum.LOADING ? (
-          <div className="p-4 text-center text-gray-500">Loading items...</div>
+          <div
+            className="p-4 text-center text-gray-500"
+            data-testid={`${defaultDataTestId}-loading`}
+          >
+            Loading items...
+          </div>
         ) : (
           !productsError.fetchingProductsList && (
             <ProductList
@@ -64,6 +76,7 @@ const MultiSelectProducts = () => {
       {productsError.fetchingProductsList ? (
         <CommonButton
           onClick={fetchProductsList}
+          dataTestId={"retry"}
           className={
             "bg-red-600 hover:bg-red-700 text-white focus:ring-red-500"
           }
@@ -75,6 +88,7 @@ const MultiSelectProducts = () => {
       ) : (
         <CommonButton
           onClick={clearProductSelection}
+          dataTestId={"clear"}
           className={
             "bg-blue-600 hover:bg-blue-700 text-white focus:ring-blue-500"
           }

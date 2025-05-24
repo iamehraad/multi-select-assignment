@@ -3,22 +3,10 @@ import type { RootState } from "../../store";
 import { sessionStorageKeys } from "../../../statics/browserStorageKeys";
 import { fetchProductsAsync } from "./productThunk";
 import { FetchApiError, LoadingEnum } from "../../../types/commonTypes";
-import { convertProductsListResponse } from "../../../convertToDomain/ convertProductsListResponse";
-import { ProductType } from "../../../types/productType";
+import { convertProductsListResponse } from "../../../convertToDomain/product-list-convertor/convertProductsListResponse";
+import { ProductSliceStatesType } from "../../../types/redux/ProductSliceTypes";
 
-interface State {
-  productsList: ProductType[];
-  selectedProducts: string[];
-  loadingStatus: LoadingEnum;
-  productsError: {
-    fetchingProductsList?: {
-      status: number;
-      message: string;
-    };
-  };
-}
-
-const initialState: State = {
+const initialState: ProductSliceStatesType = {
   productsList: [],
   selectedProducts: [],
   loadingStatus: LoadingEnum.LOADING,

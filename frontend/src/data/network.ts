@@ -1,7 +1,6 @@
 import axios from "axios";
-
-const baseUrl = import.meta.env.VITE_BACKEND_API_URL;
+import { envConfig } from "./envConfig";
 
 export const axiosClient = axios.create({
-  baseURL: baseUrl,
+  baseURL: envConfig.backendUrl,
 });

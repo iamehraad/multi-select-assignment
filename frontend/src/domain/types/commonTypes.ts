@@ -1,9 +1,3 @@
-export interface IconProps {
-    width?: number;
-    height?: number;
-    fill?: string;
-}
-
 export interface FetchApiError {
     status: number;
     message: string;

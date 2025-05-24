@@ -1,4 +1,4 @@
-import type {ProductType} from "../types/productType";
+import type {ProductType} from "../../types/productType";
 
 export const convertProductsListResponse = (
   productsList: string[]
