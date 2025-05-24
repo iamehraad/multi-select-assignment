@@ -8,5 +8,4 @@ export default {
         './envConfig': '<rootDir>/__mocks__/envConfig.ts',
     },
     setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
-
 };
