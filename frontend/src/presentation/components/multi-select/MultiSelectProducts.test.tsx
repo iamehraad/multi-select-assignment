@@ -9,6 +9,7 @@ import { mockData } from "../../../domain/utils/mockTestData";
 jest.mock("axios");
 const { mockedProducts } = mockData;
 
+
 describe("Multi select product", () => {
   const defaultDataTestId = "multi-select-products";
 
@@ -32,7 +33,7 @@ describe("Multi select product", () => {
     return {
       wrapper: screen.getByTestId(defaultDataTestId),
       inputWrapper: screen.queryByTestId(`${defaultDataTestId}-input-wrapper`),
-      searchInput: screen.queryByTestId('search-input'),
+      searchInput: screen.queryByTestId("search-input"),
       loading: screen.queryByTestId(`${defaultDataTestId}-loading`),
       actionButton: screen.queryByTestId("common-button"),
       store,
@@ -42,18 +43,20 @@ describe("Multi select product", () => {
   test("renders correctly", async () => {
     (axios.get as jest.Mock).mockResolvedValue({
       status: 200,
-      response: {data: mockedProducts},
+      response: { data: mockedProducts },
     });
-    const { wrapper, inputWrapper, loading, actionButton, searchInput } = setup({
-      productState: {
-        productsList: mockedProducts,
-        selectedProducts: [],
-        loadingStatus: LoadingEnum.IDLE,
-        productsError: {
-          fetchingProductsList: undefined,
+    const { wrapper, inputWrapper, loading, actionButton, searchInput } = setup(
+      {
+        productState: {
+          productsList: mockedProducts,
+          selectedProducts: [],
+          loadingStatus: LoadingEnum.IDLE,
+          productsError: {
+            fetchingProductsList: undefined,
+          },
         },
       },
-    });
+    );
 
     await waitFor(() => expect(wrapper).toBeInTheDocument());
 
@@ -85,6 +88,8 @@ describe("Multi select product", () => {
     await waitFor(() => expect(wrapper).toBeInTheDocument());
     expect(searchInput).toBeDisabled();
     expect(actionButton).toBeInTheDocument();
-    expect(actionButton).toHaveTextContent("Something is really wrong!. Retry fetching data");
+    expect(actionButton).toHaveTextContent(
+      "Something is really wrong!. Retry fetching data",
+    );
   });
 });

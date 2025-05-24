@@ -3,7 +3,7 @@ import type { RootState } from "../../store";
 import { sessionStorageKeys } from "../../../statics/browserStorageKeys";
 import { fetchProductsAsync } from "./productThunk";
 import { FetchApiError, LoadingEnum } from "../../../types/commonTypes";
-import { convertProductsListResponse } from "../../../convertToDomain/ convertProductsListResponse";
+import { convertProductsListResponse } from "../../../convertToDomain/convertProductsListResponse";
 import { ProductSliceStatesType } from "../../../types/redux/ProductSliceTypes";
 
 const initialState: ProductSliceStatesType = {
