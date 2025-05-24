@@ -1,6 +1,6 @@
 import { screen } from "@testing-library/react";
 import ProductListItem from "./ProductListItem";
-import { ProductListItemTypes } from "../../../../domain/types/components/ProductListItemTypes";
+import { ProductListItemProps } from "../../../../domain/types/components/ProductListItemTypes";
 import { renderWithProviders } from "../../../../domain/utils/redux-test-provider";
 import { ProductSliceStatesType } from "../../../../domain/types/redux/ProductSliceTypes";
 import { LoadingEnum } from "../../../../domain/types/commonTypes";
@@ -14,7 +14,7 @@ describe("Product list item", () => {
     componentProps,
     productState,
   }: {
-    componentProps: ProductListItemTypes;
+    componentProps: ProductListItemProps;
     productState?: ProductSliceStatesType;
   }) => {
     const { store } = renderWithProviders(
@@ -41,7 +41,7 @@ describe("Product list item", () => {
     };
   };
 
-  test("renders correctly", async () => {
+  test("renders correctly", () => {
     const { wrapper, nameSpan, checkbox, selectedBox, store } = setup({
       componentProps: {
         product: defaultProduct,
@@ -56,11 +56,11 @@ describe("Product list item", () => {
     expect(checkbox).toBeInTheDocument();
     expect(selectedBox).toBeInTheDocument();
     expect(selectedBox.firstChild).not.toBeInTheDocument();
-    expect(nameSpan).toHaveTextContent("Jest sample product")
+    expect(nameSpan).toHaveTextContent("Jest sample product");
     expect(store.getState().product.selectedProducts).toStrictEqual([]);
   });
 
-  test("renders selected blue box correctly", async () => {
+  test("renders selected blue box correctly", () => {
     const { selectedBox, store } = setup({
       componentProps: {
         product: defaultProduct,

@@ -1,6 +1,6 @@
 import { toggleItemFromSelectedList } from "../../../../domain/store/slices/product/productSlice";
 import { useAppDispatch } from "../../../../domain/utils/dispatch";
-import { ProductListItemTypes } from "../../../../domain/types/components/ProductListItemTypes";
+import { ProductListItemProps } from "../../../../domain/types/components/ProductListItemTypes";
 
 const ProductListItem = ({
   product,
@@ -8,7 +8,7 @@ const ProductListItem = ({
   listComponentStyle,
   isVerySmallDevice,
   isMobile,
-}: ProductListItemTypes) => {
+}: ProductListItemProps) => {
   const defaultTestId = "product-list-item";
   const dispatch = useAppDispatch();
 
@@ -36,6 +36,7 @@ const ProductListItem = ({
         >
           {isProductSelected && (
             <div
+              data-testid={`${defaultTestId}-checkbox-selected-blue-box`}
               className={"bg-blue-600 border-blue-600 rounded w-full h-full"}
             />
           )}

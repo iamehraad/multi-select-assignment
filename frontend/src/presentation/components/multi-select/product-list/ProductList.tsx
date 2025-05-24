@@ -3,16 +3,15 @@ import ProductListItem from "../product-list-item/ProductListItem";
 import { FixedSizeList as List } from "react-window";
 import { memo, useMemo } from "react";
 import { usePlatform } from "../../../hooks/usePlatform";
+import {ProductListProps} from "../../../../domain/types/components/ProductListTypes";
 
-interface Props {
-  productsList: ProductType[];
-  selectedProducts: string[];
-  searchQuery: string;
-}
+
 
 const ProductList = memo(
-  ({ productsList, selectedProducts, searchQuery }: Props) => {
-    const { windowHeight, isMobile, isDesktop, isVerySmallDevice } = usePlatform();
+  ({ productsList, selectedProducts, searchQuery }: ProductListProps) => {
+    const defaultTestId = "product-list";
+    const { windowHeight, isMobile, isDesktop, isVerySmallDevice } =
+      usePlatform();
 
     const filteredItems = useMemo(() => {
       const filteredSelectedItems: ProductType[] = [];
@@ -56,7 +55,7 @@ const ProductList = memo(
 
     const { unselectedProducts, allProducts } = filteredItems;
     return (
-      <div>
+      <div data-testid={defaultTestId}>
         <List
           height={getListHeight()}
           itemCount={allProducts.length}
@@ -79,9 +78,9 @@ const ProductList = memo(
           )}
         </List>
         {!unselectedProducts.length && (
-          <div>
-            <div className={"w-full h-0.5 my-4 bg-gray-400"} />
-            <div className="p-4 text-center text-red-500">
+          <div data-testid={`${defaultTestId}-no-item`}>
+            <div className={"w-full h-0.5 my-4 bg-gray-400"} data-testid={`${defaultTestId}-no-item-divider`} />
+            <div className="p-4 text-center text-red-500" data-testid={`${defaultTestId}-no-item-text`}>
               No item to be selected
             </div>
           </div>

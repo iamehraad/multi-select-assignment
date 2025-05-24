@@ -21,7 +21,7 @@ describe("Search input", () => {
     };
   };
 
-  test("renders correctly", async () => {
+  test("renders correctly", () => {
     const { input, icon } = setup({
       searchQuery: "",
       isDisabled: false,
@@ -33,7 +33,7 @@ describe("Search input", () => {
     expect(icon).toBeInTheDocument();
   });
 
-  test("renders searchQuery value correctly", async () => {
+  test("renders searchQuery value correctly", () => {
     const { input } = setup({
       searchQuery: "Mehrad",
       isDisabled: false,
@@ -43,7 +43,7 @@ describe("Search input", () => {
     expect(input).toHaveValue("Mehrad");
   });
 
-  test("fires onChange method correctly", async () => {
+  test("fires onChange method correctly", () => {
     const onChangeHandler = jest.fn();
     const { input } = setup({
       searchQuery: "",
@@ -55,7 +55,7 @@ describe("Search input", () => {
     expect(onChangeHandler).toHaveBeenCalledWith("Mehrad");
   });
 
-  test("isDisabled prop will disable input", async () => {
+  test("isDisabled prop will disable input", () => {
     const onChangeHandler = jest.fn();
     const { input } = setup({
       searchQuery: "",
