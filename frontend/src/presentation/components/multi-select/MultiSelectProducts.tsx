@@ -9,7 +9,7 @@ import { fetchProductsAsync } from "../../../domain/store/slices/product/product
 import { LoadingEnum } from "../../../domain/types/commonTypes";
 import SearchInput from "../form/inputs/SearchInput";
 import { useDebounce } from "../../hooks/useDebounce";
-import ProductList from "./ProductList";
+import ProductList from "./product-list/ProductList";
 import CommonButton from "../common/common-button/CommonButton";
 
 const MultiSelectProducts = () => {
