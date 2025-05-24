@@ -26,6 +26,7 @@ jobs:
 
   build-frontend-app:
     runs-on: ubuntu-latest
+    needs: test-frontend-app
     defaults:
       run:
         working-directory: ./frontend
