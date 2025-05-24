@@ -1,8 +1,8 @@
-import { ProductType } from "../../../domain/types/productType";
-import ProductListItem from "./ProductListItem";
+import { ProductType } from "../../../../domain/types/productType";
+import ProductListItem from "../product-list-item/ProductListItem";
 import { FixedSizeList as List } from "react-window";
 import { memo, useMemo } from "react";
-import { usePlatform } from "../../hooks/usePlatform";
+import { usePlatform } from "../../../hooks/usePlatform";
 
 interface Props {
   productsList: ProductType[];
