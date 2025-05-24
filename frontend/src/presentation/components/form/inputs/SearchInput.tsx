@@ -4,6 +4,8 @@ import { SearchInputProps } from "../../../../domain/types/components/searchInpu
 
 const SearchInput = memo(
   ({ searchQuery, setSearchQuery, isDisabled }: SearchInputProps) => {
+    const defaultTestId = "search-input";
+
     return (
       <div className="relative mb-4">
         <input
@@ -11,13 +13,13 @@ const SearchInput = memo(
           placeholder="Zoek op ..."
           disabled={isDisabled}
           className="w-full p-3 border border-gray-300 rounded-md disabled:bg-gray-300"
-          data-testid="search-input"
+          data-testid={defaultTestId}
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
         <div
           className={"absolute inset-y-0 right-0 pr-3 flex items-center"}
-          data-testid="search-input-icon"
+          data-testid={`${defaultTestId}-icon`}
         >
           <SearchIcon />
         </div>
