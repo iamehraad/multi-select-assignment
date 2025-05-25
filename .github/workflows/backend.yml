@@ -18,7 +18,7 @@ jobs:
           distribution: 'temurin'
 
       - name: Navigate to project and run tests
-        working-directory: backend/product
+        working-directory: ./backend
         run: mvn clean test
 
   build-backend-app:
@@ -35,11 +35,11 @@ jobs:
           distribution: 'temurin'
 
       - name: Navigate to project and run tests
-        working-directory: backend/product
+        working-directory: ./backend
         run: mvn -B package --file pom.xml
 
       - name: Upload JAR artifact
         uses: actions/upload-artifact@v4
         with:
           name: backend-build-jar
-          path: backend/product/target/*.jar
+          path: ./backend/target/*.jar

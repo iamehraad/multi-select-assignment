@@ -2,11 +2,11 @@ FROM maven:3.9.6-eclipse-temurin-21
 
 WORKDIR /app
 
-COPY ./product/pom.xml .
+COPY pom.xml .
 
 RUN mvn dependency:go-offline
 
-COPY ./product/src ./src
+COPY src ./src
 
 EXPOSE 8080
 

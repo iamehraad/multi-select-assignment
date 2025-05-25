@@ -14,7 +14,7 @@ installed
 
 A simple springboot application with minimum implementation just to read from data file and returns it to frontend
 
-- [Backend README](backend/product/README.md)
+- [Backend README](backend/README.md)
 
 #### Frontend
 

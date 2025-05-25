@@ -21,7 +21,7 @@ A simple standard springboot structure consisting:
 
 ## How to run?
 
-**Use docker for full experience, follow [here](../../README.md)**
+**Use docker for full experience, follow [here](../README.md)**
 
 Make sure port 8080 is not in use then:
 
