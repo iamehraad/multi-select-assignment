@@ -9,7 +9,6 @@
     ],
     "types": [
       "jest",
-      "cypress",
       "@testing-library/jest-dom"
     ],
     "noImplicitAny": true,
@@ -31,8 +30,7 @@
   },
   "include": [
     "src/**/*",
-    "vite.config.ts",
-    "cypress"
+    "vite.config.ts"
   ],
   "exclude": [
     "node_modules"
