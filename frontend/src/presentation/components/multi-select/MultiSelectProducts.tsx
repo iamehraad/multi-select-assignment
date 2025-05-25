@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../domain/utils/dispatch";
 import {
   clearSelectedProductList,
@@ -24,15 +24,15 @@ const MultiSelectProducts = () => {
     fetchProductsList();
   }, []);
 
-  const fetchProductsList = useCallback(() => {
+  const fetchProductsList = () => {
     dispatch(fetchProductsAsync());
     dispatch(setSelectedProductsFromSessionStorage());
-  }, []);
+  };
 
-  const clearProductSelection = useCallback(() => {
+  const clearProductSelection = () => {
     dispatch(clearSelectedProductList());
     setSearchQuery("");
-  }, []);
+  };
 
   return (
     <div
