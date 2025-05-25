@@ -9,8 +9,9 @@ A simple react project that allows users to select and filter a given list of st
 - Redux toolkit
 - Jest + React testing library -> Unit tests
 - Cypress -> e2e tests
-- react-window -> lazy loading large list
-- axios -> data fetching
+- React-window -> lazy loading large list
+- Axios -> data fetching
+- Tailwind
 
 ---
 
