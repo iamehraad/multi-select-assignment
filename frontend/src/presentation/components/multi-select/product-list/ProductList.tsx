@@ -3,9 +3,7 @@ import ProductListItem from "../product-list-item/ProductListItem";
 import { FixedSizeList as List } from "react-window";
 import { memo, useMemo } from "react";
 import { usePlatform } from "../../../hooks/usePlatform";
-import {ProductListProps} from "../../../../domain/types/components/ProductListTypes";
-
-
+import { ProductListProps } from "../../../../domain/types/components/ProductListTypes";
 
 const ProductList = memo(
   ({ productsList, selectedProducts, searchQuery }: ProductListProps) => {
@@ -43,13 +41,18 @@ const ProductList = memo(
       return 50;
     };
 
+    const getReservedHeightSpace = () => {
+      if (!isDesktop && windowHeight > 600) return 400;
+      if (windowHeight < 700) return 100;
+      return 500;
+    };
+
     const getListHeight = () => {
       const itemSize = getItemSize();
       const itemCount = allProducts.length;
       const calculatedHeight = itemCount * itemSize;
       const minHeight = itemSize * 2;
-      const maxHeight = !isDesktop ? windowHeight - 400 : itemSize * 8;
-
+      const maxHeight = windowHeight - getReservedHeightSpace();
       return Math.max(minHeight, Math.min(calculatedHeight, maxHeight));
     };
 
@@ -79,8 +82,14 @@ const ProductList = memo(
         </List>
         {!unselectedProducts.length && (
           <div data-testid={`${defaultTestId}-no-item`}>
-            <div className={"w-full h-0.5 my-4 bg-gray-400"} data-testid={`${defaultTestId}-no-item-divider`} />
-            <p className="p-4 text-center text-red-500" data-testid={`${defaultTestId}-no-item-text`}>
+            <div
+              className={"w-full h-0.5 my-4 bg-gray-400"}
+              data-testid={`${defaultTestId}-no-item-divider`}
+            />
+            <p
+              className="p-4 text-center text-red-500"
+              data-testid={`${defaultTestId}-no-item-text`}
+            >
               No item to be selected
             </p>
           </div>
