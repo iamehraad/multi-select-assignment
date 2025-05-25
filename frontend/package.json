@@ -9,7 +9,7 @@
     "test": "jest",
     "test:e2e": "cypress open",
     "test:e2e:run": "cypress run",
-    "lint": "eslint react-multi-select",
+    "lint": "eslint",
     "preview": "vite preview"
   },
   "dependencies": {

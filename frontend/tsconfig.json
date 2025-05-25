@@ -9,8 +9,8 @@
     ],
     "types": [
       "jest",
-      "@testing-library/jest-dom",
-      "cypress"
+      "cypress",
+      "@testing-library/jest-dom"
     ],
     "noImplicitAny": true,
     "noImplicitThis": true,

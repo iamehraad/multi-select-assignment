@@ -1,7 +1,7 @@
 import { ProductType } from "../../../../domain/types/productType";
 import ProductListItem from "../product-list-item/ProductListItem";
 import { FixedSizeList as List } from "react-window";
-import { memo, useMemo } from "react";
+import { memo } from "react";
 import { usePlatform } from "../../../hooks/usePlatform";
 import { ProductListProps } from "../../../../domain/types/components/ProductListTypes";
 
@@ -11,7 +11,7 @@ const ProductList = memo(
     const { windowHeight, isMobile, isDesktop, isVerySmallDevice } =
       usePlatform();
 
-    const filteredItems = useMemo(() => {
+    const filteredItems = () => {
       const filteredSelectedItems: ProductType[] = [];
       const filteredUnselectedItems: ProductType[] = [];
 
@@ -29,7 +29,7 @@ const ProductList = memo(
         unselectedProducts: filteredUnselectedItems,
         allProducts: [...filteredSelectedItems, ...filteredUnselectedItems],
       };
-    }, [productsList, selectedProducts, searchQuery]);
+    };
 
     const getItemSize = () => {
       if (isVerySmallDevice) {
@@ -56,7 +56,7 @@ const ProductList = memo(
       return Math.max(minHeight, Math.min(calculatedHeight, maxHeight));
     };
 
-    const { unselectedProducts, allProducts } = filteredItems;
+    const { unselectedProducts, allProducts } = filteredItems();
     return (
       <div data-testid={defaultTestId}>
         <List
