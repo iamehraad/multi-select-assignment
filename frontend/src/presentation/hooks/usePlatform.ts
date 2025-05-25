@@ -21,7 +21,7 @@ export function usePlatform(): UsePlatform {
     return () => {
       window.removeEventListener("resize", updatePlatform);
     };
-  }, [window]);
+  }, []);
 
   function updatePlatform() {
     const windowWidth = window.innerWidth;
