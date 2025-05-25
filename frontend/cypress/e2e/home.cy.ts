@@ -22,7 +22,10 @@ describe("Multi select product", () => {
 
   it("user can search, list get filtered and clear button clears filtration", () => {
     cy.get(getElementWithDataTestId("search-input")).type("Thriller");
-    cy.get(getElementWithDataTestId("search-input")).should("have.value", "Thriller");
+    cy.get(getElementWithDataTestId("search-input")).should(
+      "have.value",
+      "Thriller",
+    );
     cy.wait(500);
     cy.get(getElementWithDataTestId("product-list-item")).should(
       "have.length",
@@ -31,8 +34,8 @@ describe("Multi select product", () => {
     cy.get(getElementWithDataTestId("common-button-clear")).click();
     cy.get(getElementWithDataTestId("search-input")).should("have.value", "");
     cy.get(getElementWithDataTestId("product-list-item")).should(
-        "have.length.at.least",
-        5,
+      "have.length.at.least",
+      5,
     );
   });
 
@@ -70,11 +73,11 @@ describe("Multi select product", () => {
     cy.get(getElementWithDataTestId("common-button-clear")).click();
     cy.wait(500);
     cy.get(getElementWithDataTestId("product-list-item-checkbox"))
-        .first()
-        .should("not.be.checked");
+      .first()
+      .should("not.be.checked");
     cy.get(getElementWithDataTestId("product-list-item-checkbox"))
-        .eq(1)
-        .should("not.be.checked");
+      .eq(1)
+      .should("not.be.checked");
   });
 
   it("user can see error message when fetching products fails", () => {
