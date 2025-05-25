@@ -1,0 +1,1 @@
+export const getElementWithDataTestId = (testId: string)=> `[data-testid="${testId}"]`

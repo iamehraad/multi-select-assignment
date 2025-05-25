@@ -80,9 +80,9 @@ const ProductList = memo(
         {!unselectedProducts.length && (
           <div data-testid={`${defaultTestId}-no-item`}>
             <div className={"w-full h-0.5 my-4 bg-gray-400"} data-testid={`${defaultTestId}-no-item-divider`} />
-            <div className="p-4 text-center text-red-500" data-testid={`${defaultTestId}-no-item-text`}>
+            <p className="p-4 text-center text-red-500" data-testid={`${defaultTestId}-no-item-text`}>
               No item to be selected
-            </div>
+            </p>
           </div>
         )}
       </div>
