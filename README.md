@@ -96,11 +96,8 @@ move.
 
 #### Decision-making
 
-As I have no contact person to ask questions, I had to make decisions myself based on what I like or dislike.
-
-How I solved?
-
-Trusting my GUT feelings :]
+As I have no contact person to ask questions, I had to make decisions myself based on what I like or dislike. So I had
+to trust my gut feelings for this.
 
 Open questions:
 
@@ -113,26 +110,37 @@ Open questions:
 Deciding on how to structure your project is always a though decision to be made, I considered possible solutions like
 using full-stack frameworks or simply just mock a server with JS and different libraries.
 
-How I solved?
-
-Analyzing possible solutions like this:
+I analyzed possible solutions like this:
 
 - Using Nextjs  
-  It will do the job, using API routes will reduce the effort for creating a separate web-server or even mock-server,
-  Its good, however as job description requires some Koltin/springboot knowledge I decided to not use this path, thus
-  Nextjs is a bit of an overkill as we are not using most of its feature. Assignment requires no Routing or SSR or
+  It will do the job, using API routes will reduce the effort for creating a separate web-server or even mock-server.
+  Its good, however as job description requires some Koltin/springboot knowledge I decided to not choose this path, thus
+  Nextjs became a bit of an overkill as we are not using most of its feature. Assignment requires no Routing or SSR or
   SEO... .
 - Using React with a mock-server  
   Again will do the job, Its easier than setting up a separate project and can be simply written in JS/TS with a lot of
-  libraries that can be used.
-  But no PROD ready app gonna live with a mock-server. This project is an assignment but still we can look at it like a
-  real app
-- Separate backend and frontend  
+  libraries that can handle the job very easily. But if Im going to have a separate webserver for API call, I prefer to
+  go with the best option and the one which is close to PROD implementation.
+- Separate backend and frontend using Springboot
   As mentioned before, since job description requires Koltin/sprintboot knowledge I decided to go with this approach and
   use docker for running both projects together. Its easy for interviewer to run the project, also its easier to manage
   connections.
   Later on if I want to add another image such as a **database** it would be much easier to have docker already in
-  place. 
-   
+  place.
+
+#### Rendering huge list of items
+
+As target of this project is to show a list of products, its crucial to come up with a good way to handle rendering all
+these items. Rendering all at once will cause ofc issues if client doesnt have enough resource, so best solution is lazy
+loading.
+
+I did some research and found "react-window" library which renders item only when its needed
+
+#### Filtration over huge list
+
+Doing filtration by itself is easy but when we consider having big list, it can become a challenge to search through
+list every time user types something (not in our case but lest even say we wanted to call backend for this search, its a
+huge traffic to send each character to backend). Therefore I created a simple debouncer hook that waits for a certain
+amount of time and then we trigger the filtration based on it.
 
 
