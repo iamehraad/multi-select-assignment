@@ -56,7 +56,7 @@ install [docker](https://www.docker.com/) on your machine
 
 #### Step 4
 
-Wait for docker-compose to finish and then navigate to `http://localhost:300`
+Wait for docker-compose to finish and then navigate to `http://localhost:3000`
 
 **NOTE**:
 Please wait a bit longer until backend application completely starts. It can be the case that container is running
